@@ -1,0 +1,110 @@
+AprilTag ROS indigo
+ROS contributors have come up with a package of AprilTag based on Michael Kaes library. This package is easy to use but there are certain steps one needs to implement in order to have it working successfully.
+Step 1: Installation
+
+#Install Ros indigo ->
+#In the terminal type the following
+
+sudo apt-get install ros-indigo-desktop-full
+sudo rosdep init
+rosdep update
+# Update the bashrc file in the home folder so you dont need to source it all the time
+
+cd ~
+echo "source /opt/ros/indigo/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+#Create a catkin workspace
+# Set up catkin_ws
+
+mkdir -p ~/catkin_ws/src
+cd ~/catkin_ws/src
+catkin_init_workspace
+cd ~/catkin_ws
+catkin_make
+# Update environment for catkin
+
+source ~/catkin_ws/devel/setup.bash
+
+# Install Apriltag_ros library
+sudo apt-get install ros-indigo-apriltags-ros
+# you also need the usb_cam package installed in order to use the apritags_ros package
+sudo apt-get install ros-indigo-usb-cam
+
+
+Step 2: Calibrate your camera and get camera calibration parameters
+# Follow this link : __http://wiki.ros.org/camera_calibration__
+# you will get camera parameters which is the intrinsic matrix that consists of camera intrinsics
+# This file will be of .yaml form. Copy this file to the home/.ros/.camera_info folder. Name the #.yaml as calibration_parameter.yaml
+mkdir ~/.ros/.camera_info
+cp calibration_parameter.yaml ~/.ros/.camera_info
+
+
+
+
+Step 3: How to use this package
+In order to use this package you need to specify tag ids and size in the launch file you create. You cannot rosrun this node and get tag ids.
+These are the pre-requisites for using this package.
+1. usb_cam package and apriltag_ros package should be installed
+2. Create a launch file similar to example.launch in apriltag_ros package (you will find that in the apriltag_ros/launch folder. In the launch file mention the tag ids you want to detect and their size in meter. Also include usb_cam.launch in the launch file.
+3. Calibrate your camera and import the yaml file. Copy that yaml file with appropriate camera name in the home/user/.ros/camera_info folder. Make sure this file name matches to the file name in usb_cam.launch file. Below in the example the file name for my camera was head_camera.yaml.
+4. roslaunch apriltag_ros [launchfilename].launch
+5. Note: Below is an example of a launch file that I created for testing
+----------------------------------------------------------------------------Launch file example---------------------------------------------------------------------
+
+<launch>
+<arg name="video_device" default="/dev/video0"/>
+
+<arg name="show_tag_detections" default="false"/>
+
+<node pkg="usb_cam" type="usb_cam_node" name="usb_cam" output="screen">
+
+<param name="video_device" value="$(arg video_device)"/>
+
+<param name="camera_name" value="head_camera"/>
+
+<param name="pixel_format" value="yuyv" />
+
+</node>
+
+<node pkg="apriltags_ros" type="apriltag_detector_node" name="apriltag_detector" output="screen">
+
+<remap from="camera_info" to="usb_cam/camera_info"/>
+
+<remap from="image_rect" to="usb_cam/image_raw"/>
+
+<remap from ="tag_detections" to="person_tag"/>
+
+<rosparam param="tag_descriptions">[
+
+{id: 0, size: 0.163513},
+
+{id: 10, size: 0.163513, frame_id: a_frame},
+
+{id: 2, size: 0.163513},
+
+{id: 3, size: 0.163513},
+
+{id: 4, size: 0.163513},
+
+{id: 52, size: 0.163513}]
+
+</rosparam>
+
+</node>
+
+</launch>
+------------------------------------------------------------------------------------end of file------------------------------------------------------------------------------------------------------------------
+Topic type: geometry_msgs/PoseStamped pose
+Rostopic echo /tag_detections
+To extract the pose in callback function you need to call msg->detection[0].pose.pose to get the entire 4*4 affine matrix.
+In case you get the topic but all values of the pose are 0 then your calibration parameters have not been found by the ros master so check for errors while launching and correct the launch file
+
+
+Links for above:
+#The link to install ros indigo is here for above steps : http://wiki.ros.org/indigo/Installation/Ubuntu
+Camera calibration: __http://wiki.ros.org/camera_calibration__
+Apriltag _ros: http://wiki.ros.org/apriltags_ros
+
+
+Feel Free to reach out to me:
+Email : jimitgandhi66@gmail.com

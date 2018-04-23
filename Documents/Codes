@@ -1,0 +1,42 @@
+
+To run April tags
+
+rosrun image_view image_view image:=/tag_detections_image
+roslaunch apriltags_ros chandan.launch
+rostopic echo /tag_detections
+rostopic echo /tag_detections_pose
+
+From launch file chnages made
+
+<param name="image_width" value="640" />
+<param name="image_height" value="480" />
+<param name="pixel_format" value="yuyv" /> 
+
+__________________________________________________________
+
+Modifying data now
+to track 
+
+RVIz
+
+
+Encoder package from kg keerthana
+
+
+__Camera Node__
+
+  
+
+  <node name="image_view" pkg="image_view" type="image_view" respawn="false" output="screen">
+    <remap from="image" to="/usb_cam/image_raw"/>
+    <param name="autosize" value="true" />
+  </node>
+
+
+  <node name="image_view" pkg="image_view" type="image_view" respawn="false" output="screen">
+    <remap from="image" to="tag_detections_image"/>
+    <param name="autosize" value="true" />
+  </node>
+
+
+
