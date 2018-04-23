@@ -1,0 +1,22 @@
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Create a folder in bitbucket.com first 
+come to any directory :
+
+git clone (U need the address)
+
+Example  : https://bitchandan@bitbucket.org/Kasun1989/project.git
+   git clone https://bitchandan@bitbucket.org/Kasun1989/project.git
+    git status
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+To push all files in folder 
+
+git add .
+git commit -m "Inintal commit"
+git push origin master 
+(Enter passwords)
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Git status to check the diffeence in the files 
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++
