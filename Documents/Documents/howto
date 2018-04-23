@@ -1,0 +1,7 @@
+. ~/catkin_ws/devel/setup.bash
+roslaunch moveit_package demo.launch
+
+
+. ~/catkin_ws/devel/setup.bash
+python main.py
+

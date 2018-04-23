@@ -1,0 +1,32 @@
+Georgia univesity group 
+https://github.com/gt-ros-pkg
+
+Swatbotics april tags
+https://github.com/swatbotics/apriltag
+
+USB cam _ ROS
+http://wiki.ros.org/usb_cam#Published_Topics
+
+
+Issues
+https://github.com/ros-drivers/usb_cam/issues/9
+
+Garbeled image
+https://answers.ros.org/question/217382/garbled-image-problem-on-usb_cam/
+
+Pykdl libraries
+No module named pykdl_utils.kdl_kinematics
+
+http://wiki.ros.org/pykdl_utils
+
+https://github.com/gt-ros-pkg/hrl-kdl
+
+
+APRIL TAGS 
+Keerthana 
+
+https://github.com/keerthanpg/apriltags_ros/blob/indigo-devel/apriltags_ros/launch/example.launch
+
+
+Xnebot 
+https://github.com/xenobot-dev/apriltags_ros/tree/master/apriltags_ws/src/apriltags
